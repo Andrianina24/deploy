@@ -1,4 +1,4 @@
-import React, { SetStateAction } from "react";
+import React, { useState } from "react";
 import {
   IonButtons,
   IonItem,
@@ -14,15 +14,56 @@ import {
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
-import Table from "./Table";
-import { useEffect, useState } from "react";
 import "./Header.css";
+import Table from "./Table";
 
-function Header() {
-  const [selectedMethod, setSelectedMethod] = useState("general");
+// Reusable Button component
+interface CustomButtonProps {
+  label: string;
+  method: string;
+  onClick: (method: string) => void;
+}
 
-  const handleButtonClick = (method: String) => {
-    setSelectedMethod(method as SetStateAction<string>);
+const CustomButton: React.FC<CustomButtonProps> = ({
+  label,
+  method,
+  onClick,
+}) => (
+  <div className="ion-padding" slot="content">
+    <IonButton expand="full" onClick={() => onClick(method)}>
+      {label}
+    </IonButton>
+  </div>
+);
+
+// Accordion section component
+interface AccordionSectionProps {
+  label: string;
+  method: string;
+  onClick: (method: string) => void;
+}
+
+const AccordionSection: React.FC<AccordionSectionProps> = ({
+  label,
+  method,
+  onClick,
+}) => (
+  <IonAccordion value={method}>
+    <IonItem slot="header" color="light">
+      <IonLabel>{label}</IonLabel>
+    </IonItem>
+    <CustomButton label="General" method={method} onClick={onClick} />
+    <CustomButton label="Domicile" method={`${method}Dom`} onClick={onClick} />
+    <CustomButton label="Exterieur" method={`${method}Ext`} onClick={onClick} />
+  </IonAccordion>
+);
+
+// Header component
+const Header: React.FC = () => {
+  const [selectedMethod, setSelectedMethod] = useState<string>("general");
+
+  const handleButtonClick = (method: string) => {
+    setSelectedMethod(method);
   };
 
   return (
@@ -35,48 +76,21 @@ function Header() {
         </IonHeader>
         <IonContent className="ion-padding">
           <IonAccordionGroup className="accord">
-            <IonAccordion value="general">
-              <IonItem slot="header" color="light">
-                <IonLabel>General</IonLabel>
-              </IonItem>
-              <div className="ion-padding" slot="content">
-              <IonButton expand="full" onClick={() => handleButtonClick("general")}>General</IonButton>
-              </div>
-              <div className="ion-padding" slot="content">
-              <IonButton expand="full" onClick={() => handleButtonClick("generalDom")}>Domicile</IonButton>
-              </div>
-              <div className="ion-padding" slot="content">
-              <IonButton expand="full" onClick={() => handleButtonClick("generalExt")}>Exterieur</IonButton>
-              </div>
-            </IonAccordion>
-            <IonAccordion value="attaque">
-              <IonItem slot="header" color="light">
-                <IonLabel>Attaque</IonLabel>
-              </IonItem>
-              <div className="ion-padding" slot="content">
-              <IonButton expand="full" onClick={() => handleButtonClick("attaque")}>General</IonButton>
-              </div>
-              <div className="ion-padding" slot="content">
-              <IonButton expand="full" onClick={() => handleButtonClick("attaqueDom")}>Domicile</IonButton>
-              </div>
-              <div className="ion-padding" slot="content">
-              <IonButton expand="full" onClick={() => handleButtonClick("attaqueExt")}>Exterieur</IonButton>
-              </div>
-            </IonAccordion>
-            <IonAccordion value="defense">
-              <IonItem slot="header" color="light">
-                <IonLabel>Defense</IonLabel>
-              </IonItem>
-              <div className="ion-padding" slot="content">
-              <IonButton expand="full" onClick={() => handleButtonClick("defense")}>General</IonButton>
-              </div>
-              <div className="ion-padding" slot="content">
-              <IonButton expand="full" onClick={() => handleButtonClick("defenseDom")}>Domicile</IonButton>
-              </div>
-              <div className="ion-padding" slot="content">
-              <IonButton expand="full" onClick={() => handleButtonClick("defenseExt")}>Exterieur</IonButton>
-              </div>
-            </IonAccordion>
+            <AccordionSection
+              label="General"
+              method="general"
+              onClick={handleButtonClick}
+            />
+            <AccordionSection
+              label="Attaque"
+              method="attaque"
+              onClick={handleButtonClick}
+            />
+            <AccordionSection
+              label="Defense"
+              method="defense"
+              onClick={handleButtonClick}
+            />
           </IonAccordionGroup>
         </IonContent>
       </IonMenu>
@@ -93,10 +107,11 @@ function Header() {
           </IonToolbar>
         </IonHeader>
         <IonContent className="ion-padding">
-        {/* <Table meth={selectedMethod} /> */}
-      </IonContent>
+          <Table meth={selectedMethod} />
+        </IonContent>
       </IonPage>
     </div>
   );
-}
+};
+
 export default Header;

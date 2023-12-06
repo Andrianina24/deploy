@@ -3,11 +3,8 @@
 }
 
 .headreturn{
-    position: absolute;
+    /* position: absolute; */
     left: 0;
     right: 0;
-}
-
-.accord{
-    position: absolute;
-}
+    /* transform: translateY(-50%); */
+  }

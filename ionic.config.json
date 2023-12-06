@@ -1,0 +1,7 @@
+{
+  "name": "deploy",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react-vite"
+}

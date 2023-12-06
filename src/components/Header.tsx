@@ -26,7 +26,7 @@ function Header() {
   };
 
   return (
-    <>
+    <div className="headreturn">
       <IonMenu side="end" contentId="main-content">
         <IonHeader>
           <IonToolbar>
@@ -34,7 +34,7 @@ function Header() {
           </IonToolbar>
         </IonHeader>
         <IonContent className="ion-padding">
-          <IonAccordionGroup>
+          <IonAccordionGroup className="accord">
             <IonAccordion value="general">
               <IonItem slot="header" color="light">
                 <IonLabel>General</IonLabel>
@@ -96,7 +96,7 @@ function Header() {
         {/* <Table meth={selectedMethod} /> */}
       </IonContent>
       </IonPage>
-    </>
+    </div>
   );
 }
 export default Header;

@@ -1,3 +1,13 @@
 .who{
     color: green;
 }
+
+.headreturn{
+    position: absolute;
+    left: 0;
+    right: 0;
+}
+
+.accord{
+    position: absolute;
+}

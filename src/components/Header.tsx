@@ -17,6 +17,10 @@ import {
 import "./Header.css";
 import Table from "./Table";
 
+interface ContainerProps {
+  meth: string;
+}
+
 // Reusable Button component
 interface CustomButtonProps {
   label: string;
@@ -59,7 +63,7 @@ const AccordionSection: React.FC<AccordionSectionProps> = ({
 );
 
 // Header component
-const Header: React.FC = () => {
+const Header: React.FC<ContainerProps> = () => {
   const [selectedMethod, setSelectedMethod] = useState<string>("general");
 
   const handleButtonClick = (method: string) => {

@@ -2,7 +2,11 @@ import AxiosService from "../components/AxiosService";
 import React, { SetStateAction, useEffect, useState } from "react";
 import "./Table.css";
 
-function Table(props: any) {
+interface ContainerProps {
+  meth: string;
+}
+
+const Table: React.FC<ContainerProps> = (props: ContainerProps) => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -60,7 +64,9 @@ function Table(props: any) {
       <tr>
         {Object.keys(firstItem).map((columnName, i) => (
           <th key={i} className="tete">
-            <p><strong>{columnName}</strong></p>
+            <p>
+              <strong>{columnName}</strong>
+            </p>
           </th>
         ))}
       </tr>
@@ -73,7 +79,9 @@ function Table(props: any) {
     return (data as any[]).map((item, index) => (
       <tr key={index} className="corps">
         {Object.values(item).map((columnValue, i) => (
-          <td key={i}><p>{String(columnValue)}</p></td>
+          <td key={i}>
+            <p>{String(columnValue)}</p>
+          </td>
         ))}
       </tr>
     ));
@@ -88,5 +96,5 @@ function Table(props: any) {
       </table>
     </div>
   );
-}
+};
 export default Table;
